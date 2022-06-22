@@ -25,4 +25,12 @@
 3. With ES6 let and const is used to declare a block scope, with no hoisting.
 4. global scope: There is a global object and all declaration(global) are members of this object.
 5. global object: browser the global object is "window" and in Nodejs the global obect is called "global"
-
+6. functions in javascript are first-class types.
+7. JS has auto-semicolonization
+8. Timer methods: setTimeout, setInterval, clearInterval ==> Async methods
+9. Javascript is single-threaded, newer version have features workers(HTML5 browsers), threads in nodejs 14
+10. JavaScript Engine in chrome is V8 engine and libuv library(C++);
+11. Lexical scopes 
+12. API call => XMLHttpRequest object, fetch api(HTML5)
+13. Async Functions => Some async behavoirs defined by JS
+14. Object is a collection of key-value pairs
