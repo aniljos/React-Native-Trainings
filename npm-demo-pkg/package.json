@@ -1,0 +1,20 @@
+{
+  "name": "npm-demo-pkg",
+  "version": "1.0.0",
+  "description": "Sample Package",
+  "main": "abc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "build": "",
+    "mycommand": "node index.js"
+  },
+  "author": "Anil Joseph",
+  "license": "ISC",
+  "dependencies": {
+    "luxon": "^2.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

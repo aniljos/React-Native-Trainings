@@ -12,4 +12,6 @@ export function bar(){
 }
 
 
+export class Test{}
+
 export default bar;
