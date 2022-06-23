@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox</title>
+    <style>
+        .container{
+            border-width: 2px;
+            border-color: rgb(107, 33, 204);
+            border-style: solid;
+            text-align: center;
+            
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .container > div{
+            height: 50px;
+            width: 50px;
+            border: 2px solid rgb(189, 211, 154);
+            background-color: rgb(150, 103, 32);
+            font-size: 2em;
+            color: black;
+            margin: 3px;
+            padding: 50px;
+            /* float: left; */
+        }
+    </style>
+
+    <script>
+
+        var counter = 0;
+        function load(){
+
+            var handle = setInterval(function(){
+
+                var elememt = document.createElement("div");
+                var textNode = document.createTextNode(++counter);
+                elememt.appendChild(textNode);
+                document.getElementById("container").appendChild(elememt);
+
+                if(counter >= 25){
+                    clearInterval(handle);
+                }
+            }, 500);
+
+        }
+    </script>
+    
+</head>
+<body>
+    <header>
+        <h3>Flexbox</h3>
+    </header>
+    <main>
+        <!-- <button onclick="load()">Load</button> -->
+        <div id="container" class="container">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+        </div>
+    </main>
+</body>
+</html>
