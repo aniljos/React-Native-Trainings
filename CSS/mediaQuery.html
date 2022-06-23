@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Query</title>
+    <style>
+        .box {
+            border: 2px solid blueviolet;
+            margin: 7px;
+            padding: 5px;
+            height: 200px;
+            
+        }
+
+
+
+
+
+        @media screen and (max-width:600px) {
+           .one{
+               display: block;
+               background-color: yellow;
+           }
+        }
+
+        @media screen and (min-width:600px) and (max-width:900px) {
+            .two{
+                display: block;
+                background-color: lightsalmon;
+            }
+
+        }
+
+        @media screen and (min-width:900px) {
+           .three{
+               display: block;
+               background-color: brown;
+               
+           }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box one">
+        <p>This is a media query example</p>
+        <span>
+            Displayed when the width is less that 600px
+        </span>
+    </div>
+    <div class="box two">
+        <p>This is a media query example</p>
+        <span>
+            Displayed when the width between 600px and 900px
+        </span>
+    </div>
+    <div class="box three">
+        <p>This is a media query example</p>
+        <span>
+            Displayed when the width greater than 900px
+        </span>
+    </div>
+</body>
+
+</html>

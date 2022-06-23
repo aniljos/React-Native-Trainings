@@ -1,0 +1,52 @@
+html{
+    background-image: url("/images/whitebackground.png");
+}
+
+
+ul{
+    list-style: none;
+    background-color: #333333;
+    overflow: hidden;
+}
+
+ul > li{
+    float: right;
+}
+
+ul > li > a{
+
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+}
+
+header{
+    color: #0f7fff
+}
+
+.pageHeader{
+    background-color: #e9ecef;
+    padding: .625rem;
+    margin: .625rem;
+}
+
+.button{
+    color: white;
+    padding: .37rem;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.primary{
+    background-color: #007bff;
+}
+
+.info{
+    background-color: #17a2b8;
+}
+
+.warning{
+    background-color: #ffc107;
+}
+
