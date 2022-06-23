@@ -1,0 +1,10 @@
+header #0f7fff
+pageheader #e9ecef
+success #28a745
+primary #007bff
+warning #ffc107
+info #17a2b8
+
+ul #333333
+
+thumbnail #ddd
