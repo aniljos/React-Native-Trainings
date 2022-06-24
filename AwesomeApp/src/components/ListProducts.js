@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,8 +8,9 @@ import {
   TouchableHighlight,TouchableOpacity, Alert
 } from 'react-native';
 import axios from 'axios';
+import EditProduct from './EditProduct';
 
-class ListProducts extends Component {
+class ListProducts extends PureComponent {
 
   //immutable  
   state = {
@@ -17,7 +18,15 @@ class ListProducts extends Component {
     selectedProduct: null
   };
 
+  constructor(props){
+    super(props);
+
+    console.log("[ListProducts constructor]")
+  }
+
   async componentDidMount() {
+
+    console.log("[ListProducts componentDidMount]")
     const url = 'http://10.0.2.2:9000/products';
     // var promise = axios.get(url);
     // //promise.then(successCallback, errorCallback)
@@ -76,10 +85,45 @@ class ListProducts extends Component {
     });
   }
 
+  editCancel = (message)=> {
+    //Alert.alert("Message", message);
+    this.setState({
+        selectedProduct: null
+    })
+  }
+
+  editUpdate = async (updatedProduct) => {
+    Alert.alert("Message", "Updating product: " + updatedProduct.name);
+
+    try {
+        
+        const url = `http://10.0.2.2:9000/products/${updatedProduct.id}`;
+        const response = await axios.put(url, updatedProduct);
+
+        const resp = await axios.get(`http://10.0.2.2:9000/products`);
+        this.setState({
+            products: resp.data
+        });
+
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+  }
+
   render() {
+
+    console.log("[ListProducts render]")
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.headerText}>List Products</Text>
+
+        {this.state.selectedProduct !== null ? <EditProduct 
+                                                    key={this.state.selectedProduct.id} 
+                                                    product={this.state.selectedProduct}
+                                                    onSave={this.editUpdate}
+                                                    onCancel={this.editCancel}/> : null}
 
         <View>
           {this.state.products.map((item, index) => {
@@ -107,6 +151,28 @@ class ListProducts extends Component {
       </ScrollView>
     );
   }
+
+  componentWillMount(){
+    console.log("[ListProducts componentWillMount]");
+  }
+  componentWillReceiveProps(){
+    console.log("[ListProducts componentWillReceiveProps]");
+  }
+//   shouldComponentUpdate(){
+//     console.log("[ListProducts shouldComponentUpdate]");
+//     return true;
+//   }
+  componentWillUpdate(){
+    console.log("[ListProducts componentWillUpdate]");
+  }
+  componentDidUpdate(){
+    console.log("[ListProducts componentDidUpdate]");
+  }
+  componentWillUnmount(){
+    console.log("[ListProducts componentWillUnmount]");
+  }
+
+
 }
 
 const styles = StyleSheet.create({
