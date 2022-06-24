@@ -34,3 +34,12 @@
 12. API call => XMLHttpRequest object, fetch api(HTML5)
 13. Async Functions => Some async behavoirs defined by JS
 14. Object is a collection of key-value pairs
+
+
+### React Native
+
+## Event Handling
+
+1. To the event, we pass the reference to the function(handler) in an expression
+2. The thumb rule is to define the event handlers as arrow functions. This takes care  of the (this refrenece) error.
+3. Event handlers defined as function expressions/statements we need to bind to the component instance.

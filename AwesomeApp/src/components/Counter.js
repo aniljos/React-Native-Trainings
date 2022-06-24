@@ -2,26 +2,46 @@ import React, { Component } from 'react';
 import { Button, Text, View } from 'react-native';
 
 
+
+
 class Counter extends Component{
 
     //immutable
     state = {
-        count: 0
+        count: 0,
+        message: "hello"
     }
 
     constructor(props){
         super(props);
 
         this.state.count = props.initCount;
+        this.decr = this.decr.bind(this);
 
     }
 
     inc = () => {
         
-        console.log("inc called", this.count);
+        
+        //setState ==> Async method
+        //setState(slice of the state to update, callbackToInvokeAfterStateUpdate)
         this.setState({
             count: this.state.count + 1
+        }, () => {
+            console.log("inc called", this.state.count);
         });
+        
+    }
+
+    decr = function(){
+        //setState ==> Async method
+        //setState(slice of the state to update, callbackToInvokeAfterStateUpdate)
+        this.setState({
+            count: this.state.count - 1
+        }, () => {
+            console.log("inc called", this.state.count);
+        });
+        
     }
 
     render(){
@@ -33,7 +53,7 @@ class Counter extends Component{
                     <Button title='Inc' onPress={this.inc}/>
                 </View>
                 <View>
-                    <Button title='Decr'/>
+                    <Button title='Decr' onPress={this.decr}/>
                 </View>
             </View>
         )
