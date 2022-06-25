@@ -43,3 +43,8 @@
 1. To the event, we pass the reference to the function(handler) in an expression
 2. The thumb rule is to define the event handlers as arrow functions. This takes care  of the (this refrenece) error.
 3. Event handlers defined as function expressions/statements we need to bind to the component instance.
+
+## Touch Events
+
+1. Button has a onPress event
+2. Touchable Componenets
