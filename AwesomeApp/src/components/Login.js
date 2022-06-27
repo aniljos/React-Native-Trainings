@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import  { View, Text, Button, TextInput, Alert } from "react-native";
 import {styles} from '../globals/appStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 state = {
     userName: ""
@@ -18,6 +19,8 @@ function Login(props){
 
         try {
             const resposne = await axios.post("http://10.0.2.2:9000/login", {name: userName, password: password});
+            AsyncStorage.setItem("userInfo", JSON.stringify({userName, password}) );
+            
             props.navigation.navigate("gadgets");
 
         } catch (error) {

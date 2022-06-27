@@ -9,7 +9,8 @@ import {useDispatch} from 'react-redux';
 // actions used by the dispatch
 import {addToCart, removeFromCart} from '../redux/cartSlice';
 
-function GadgetStore(){
+
+function GadgetStore(props){
 
     const [results, setResults] = useState([]);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -65,6 +66,10 @@ function GadgetStore(){
         <View style={styles.container}>
             <Text style={styles.titleText}>Gadget Store</Text>
 
+            <View style={{flexDirection: 'row', justifyContent: 'flex-start', margin: 7}}>
+                <Button title='View Cart' onPress={()=> {props.navigation.navigate("viewcart")}}/>
+            </View>
+            
             <FlatList 
                     data={results} 
                     keyExtractor={item => item.id}
@@ -82,6 +87,7 @@ function GadgetStore(){
                             </View>
                         )
                     }}/>
+                
         </View>
     )
 }
