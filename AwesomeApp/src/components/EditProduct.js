@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Text, TextInput, View } from "react-native";
-
+import {styles as appStyles} from '../globals/appStyles';
+import CustomTextInput from "./CustomTextInput";
 
 class EditProduct extends Component{
 
@@ -62,10 +63,10 @@ class EditProduct extends Component{
 
             <Text>ID : {id} </Text>
 
-            <TextInput placeholder="Name" keyboardType="default" 
+            <TextInput style={appStyles.textInput} placeholder="Name" keyboardType="default" 
                     value={name} onChangeText={this.handleNameChange}/>
-            <TextInput placeholder="Price" keyboardType="numeric" value={"" + price} onChangeText={this.handlePriceChange}/>
-            <TextInput placeholder="Description" keyboardType="default" value={description} onChangeText={this.handleDescriptionChange}/>
+            <TextInput style={appStyles.textInput} placeholder="Price" keyboardType="numeric" value={"" + price} onChangeText={this.handlePriceChange}/>
+            <CustomTextInput placeholder="Description" keyboardType="default" value={description} onChangeText={this.handleDescriptionChange}/>
 
             <View>
                 <Button title="Save" onPress={this.save}/>
