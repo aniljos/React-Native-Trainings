@@ -35,7 +35,7 @@ function NavigationApp(){
 
     return (
         <NavigationContainer>
-            {isAuth ?  <Stack.Navigator>
+            {isAuth ?  <Stack.Navigator >
 
                 <Stack.Screen name="contacts" component={Contacts} />
                 <Stack.Screen name="gadgets" component={GadgetStore} />
