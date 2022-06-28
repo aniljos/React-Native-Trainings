@@ -8,6 +8,10 @@ const CustomTextInput = function(props){
 
     console.log("in custom text input")
 
+    function setFocus(){
+        
+    }
+    
     return (
         <TextInput style={styles.textInput} {...props}/>
     )
