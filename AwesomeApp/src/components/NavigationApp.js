@@ -32,7 +32,6 @@ function NavigationApp(){
             setIsAuth(false);
         }
     }
-
     return (
         <NavigationContainer>
             {isAuth ?  <Stack.Navigator >

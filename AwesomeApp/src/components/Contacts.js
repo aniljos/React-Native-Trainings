@@ -1,8 +1,10 @@
 
 import React, {useEffect, useState }  from "react";
-import { Button, FlatList, Modal, Text, TextInput, View } from "react-native";
+import { Button, FlatList, Modal, Text, TextInput, View, Linking, Alert, Share } from "react-native";
 import {styles as appStyles} from '../globals/appStyles'
+import {NativeModules} from 'react-native'
 
+const {SampleModule} = NativeModules;
 
 class ContactInfo{
     constructor(name, mobileNo, email){
@@ -28,19 +30,46 @@ function Contacts(){
 
     async function loadData(){
 
-        
+        try {
+            const result = await SampleModule.sayHello("react native module");
+            console.log("sayHello result", result);
+        } catch (error) {
+            console.log("sayHello error", error);
+        }
+
+        try {
+            const result = await SampleModule.checkCameraFlash();
+            console.log("checkCameraFlash result", result);
+        } catch (error) {
+            console.log("checkCameraFlash error", error);
+        }
         
     }
 
     async function mailTo(email){
 
+        try {
+            const result = await Linking.canOpenURL(`mailTo://${email}`);
+            await Linking.openURL(`mailTo://${email}`);
+        } catch (error) {
+            Alert.alert("Message", "No mail apps");
+        }
         
         
     }
 
     async function share(contact){
 
-        
+        const result = await Share.share({
+            message: "Share contact " + contact.name
+        });
+
+        if(result.action === "sharedAction"){
+            Alert.alert("Message", "Shared successfully");
+        }
+        if(result.action === "dismissedAction"){
+            Alert.alert("Message", "Shared dismissed");
+        }
         
     }
     
@@ -56,9 +85,9 @@ function Contacts(){
                             <Text style={{color: 'mediumslateblue', fontSize: 17, marginBottom: 6}}>{`MobileNo: ${result.item.mobileNo}`}</Text>
                             <Text style={{color: 'mediumpurple', fontSize: 17, marginBottom: 6}}>{`Email: ${result.item.email}`}</Text>
                             <View style={appStyles.actionContainer}>
-                                <Button title="Call" onPress={() => {}}/>
+                                <Button title="Call" onPress={() => {Linking.openURL(`tel://${result.item.mobileNo}`)}}/>
                                 <Button title="Email" onPress={() => mailTo(result.item.email)}/>
-                                <Button title="Text" onPress={() => {}}/>
+                                <Button title="Text" onPress={() => {Linking.openURL(`sms://${result.item.mobileNo}`)}}/>
                                 <Button title="Share" onPress={() => share(result.item)}/>
                             </View>
                         </View>
@@ -85,11 +114,18 @@ function Contacts(){
         }
         
     }
+
+    async function callNativeModule(){
+
+        console.log("Calling native modules");
+    }
     return (
         <View style={appStyles.container}>
             <Text style={appStyles.titleText}>Contacts</Text>
             <View style={appStyles.actionContainer}>
-                <Button title="Add New" onPress={() => setIsModalVisible(true)}/>   
+                <Button title="Add New" onPress={() => setIsModalVisible(true)}/>  
+
+                <Button title="Call Native Module" onPress={callNativeModule}/> 
                 
             </View>
             <View>

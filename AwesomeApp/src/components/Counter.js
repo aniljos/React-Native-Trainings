@@ -14,7 +14,7 @@ class Counter extends Component{
 
     constructor(props){
         super(props);
-
+        
         this.state.count = props.initCount;
         this.decr = this.decr.bind(this);
 
