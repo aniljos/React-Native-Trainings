@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import  { View, Text, Alert, FlatList, Button } from "react-native";
 import axios from 'axios';
 import { styles } from '../globals/appStyles';
+import {fetchProductsAsync} from '../redux/cartSlice';
 
 // Custom react hook to dispatch actions
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 // actions used by the dispatch
 import {addToCart, removeFromCart} from '../redux/cartSlice';
@@ -15,12 +16,24 @@ function GadgetStore(props){
     const [results, setResults] = useState([]);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const dispatch = useDispatch();
+    const products = useSelector(state => state.shop.products);
+
+
+    useEffect(() => {
+
+        setResults(products);
+
+    }, [products])
+
 
   // useEffect(() => {}, []) with no dependencies ==> componentDidMount
    useEffect(() => {
 
         console.log("same as the componentDidMount");
-        loadProducts();
+        ///loadProducts();
+
+        // dispatchs an action with type "fetchProducts"
+        dispatch(fetchProductsAsync());
 
         // callback returned in the useEffect with no dependencies => componentWillUnmount
         return ()=> {

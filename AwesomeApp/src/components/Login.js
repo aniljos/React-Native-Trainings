@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import  { View, Text, Button, TextInput, Alert } from "react-native";
+import React, { useCallback, useState } from 'react';
+import  { View, Text, Button, TextInput, Alert, Platform, ToastAndroid } from "react-native";
 import {styles} from '../globals/appStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomTextInput from './CustomTextInput';
 
 state = {
     userName: ""
@@ -13,7 +14,7 @@ function Login(props){
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-
+    
 
     async function login(){
 
@@ -26,18 +27,36 @@ function Login(props){
         } catch (error) {
             
             console.log(error);
-            Alert.alert("Login", "Invalid Credential");
+
+            if(Platform.OS === 'ios'){
+                Alert.alert("Login", "Invalid Credential");
+            }
+            if(Platform.OS === 'android'){
+                ToastAndroid.show("Invalid Credential", ToastAndroid.LONG);
+            }
+            
         }
     }
+   
+    const onChangePassword = useCallback( (value) => {
+        
+        setPassword(value);
+
+    }, [password]);
     return (
         <View style={styles.container}>
             <Text  style={styles.titleText}>Login</Text>
 
             <TextInput  style={styles.textInput} placeholder='User Name' keyboardType='default' 
                         value={userName} onChangeText={(value) => {setUserName(value)}}/>
-            <TextInput style={styles.textInput} placeholder='Password' 
+
+            {/* <CustomTextInput style={styles.textInput} placeholder='Password' 
                     keyboardType='default' secureTextEntry={true} value={password} 
-                            onChangeText={value => setPassword(value)}/>
+                            onChangeText={value => setPassword(value)}/> */}
+
+                <CustomTextInput style={styles.textInput} placeholder='Password' 
+                    keyboardType='default' secureTextEntry={true} value={password} 
+                            onChangeText={onChangePassword}/>
 
             <View style={styles.actionContainer}>
                 <Button title='Login' onPress={login}/>

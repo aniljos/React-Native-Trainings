@@ -1,8 +1,19 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import axios from 'axios';
+
+
+export const fetchProductsAsync = createAsyncThunk("fetchProducts", async () => {
+
+    const resposne = await axios.get("http://10.0.2.2:9000/products");
+    return resposne.data;
+
+})
+
 
 // cart --. cartItem --> {product, qty: 3}
 const initialState = {
-    cart : []
+    cart : [],
+    products: []
 }
 
 export const cartSlice = createSlice({
@@ -22,9 +33,21 @@ export const cartSlice = createSlice({
             if(index !== -1){
                 state.cart.splice(index, 1);
             }
-
-
         }
+    },
+    extraReducers: (builder) => {
+
+        builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
+
+            console.log("in the thunk async middleware");
+            state.products = action.payload;
+        })
+
+        builder.addCase(fetchProductsAsync.rejected, (state, action) => {
+
+            console.log("in the thunk async middleware");
+            state.products = [];
+        })
     }
 });
 

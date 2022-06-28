@@ -3,6 +3,9 @@ import React, {useEffect, useState }  from "react";
 import { Button, FlatList, Modal, Text, TextInput, View, Linking, Alert, Share } from "react-native";
 import {styles as appStyles} from '../globals/appStyles'
 import {NativeModules} from 'react-native'
+import * as contactsDBService from '../sql/ContactsDBService';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
 
 const {SampleModule} = NativeModules;
 
@@ -24,27 +27,34 @@ function Contacts(){
     
     useEffect(()=> {
 
-        loadData();
+        //loadData();
 
     }, [])
 
     async function loadData(){
 
         try {
-            const result = await SampleModule.sayHello("react native module");
-            console.log("sayHello result", result);
-        } catch (error) {
-            console.log("sayHello error", error);
-        }
+            
+            
+            const promise =  contactsDBService.getConnection();
+            console.log("loaddata", promise);
 
-        try {
-            const result = await SampleModule.checkCameraFlash();
-            console.log("checkCameraFlash result", result);
+            promise.then(async (db) => {
+                await contactsDBService.createTable(db);
+                const contacts = await contactsDBService.fetchContacts(db);
+                setData(contacts);
+
+            })
+            
+
         } catch (error) {
-            console.log("checkCameraFlash error", error);
+            console.log("loadData", error)
         }
+       
         
     }
+
+   
 
     async function mailTo(email){
 
@@ -85,10 +95,16 @@ function Contacts(){
                             <Text style={{color: 'mediumslateblue', fontSize: 17, marginBottom: 6}}>{`MobileNo: ${result.item.mobileNo}`}</Text>
                             <Text style={{color: 'mediumpurple', fontSize: 17, marginBottom: 6}}>{`Email: ${result.item.email}`}</Text>
                             <View style={appStyles.actionContainer}>
-                                <Button title="Call" onPress={() => {Linking.openURL(`tel://${result.item.mobileNo}`)}}/>
+                                {/* <Button title="Call" onPress={() => {Linking.openURL(`tel://${result.item.mobileNo}`)}}/>
                                 <Button title="Email" onPress={() => mailTo(result.item.email)}/>
                                 <Button title="Text" onPress={() => {Linking.openURL(`sms://${result.item.mobileNo}`)}}/>
-                                <Button title="Share" onPress={() => share(result.item)}/>
+                                <Button title="Share" onPress={() => share(result.item)}/> */}
+
+                                <Icon.Button name="phone" size={30} color="blue" backgroundColor="white" onPress={() => {Linking.openURL(`tel://${result.item.mobileNo}`)}}/>
+                                <Icon.Button name="email" size={30} color="red" backgroundColor="white" onPress={() => mailTo(result.item.email)}/>
+                                <Icon.Button name="textsms" size={30} color="teal" backgroundColor="white" onPress={() => {Linking.openURL(`sms://${result.item.mobileNo}`)}}/>
+                                <Icon.Button name="share" size={30} color="green" backgroundColor="white" onPress={() => share(result.item)}/>
+                                
                             </View>
                         </View>
                     ))}/>
@@ -105,9 +121,12 @@ function Contacts(){
     async function saveContact(){
 
         try {
+
+
             setData([...data, contact]);
             setContact(initContact);
             setIsModalVisible(false)
+
             
         } catch (error) {
             console.log("saveContact", error);
@@ -118,10 +137,24 @@ function Contacts(){
     async function callNativeModule(){
 
         console.log("Calling native modules");
+        await loadData();
+        try {
+            const result = await SampleModule.sayHello("react native module");
+            console.log("sayHello result", result);
+        } catch (error) {
+            console.log("sayHello error", error);
+        }
+
+        try {
+            const result = await SampleModule.checkCameraFlash();
+            console.log("checkCameraFlash result", result);
+        } catch (error) {
+            console.log("checkCameraFlash error", error);
+        }
     }
     return (
         <View style={appStyles.container}>
-            <Text style={appStyles.titleText}>Contacts</Text>
+            <Text style={appStyles.titleText}>Contacts Android</Text>
             <View style={appStyles.actionContainer}>
                 <Button title="Add New" onPress={() => setIsModalVisible(true)}/>  
 

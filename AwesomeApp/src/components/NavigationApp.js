@@ -36,14 +36,21 @@ function NavigationApp(){
         <NavigationContainer>
             {isAuth ?  <Stack.Navigator >
 
-                <Stack.Screen name="contacts" component={Contacts} />
                 <Stack.Screen name="gadgets" component={GadgetStore} />
                 <Stack.Screen name="viewcart" component={ViewCart}/>
+                <Stack.Screen name="login" component={Login}/>
+                <Stack.Screen name="contacts" component={Contacts} />
+               
+                
+                
             </Stack.Navigator> : 
             <Stack.Navigator>
-                <Stack.Screen name="login" component={Login}/>
                 <Stack.Screen name="gadgets" component={GadgetStore}/>
                 <Stack.Screen name="viewcart" component={ViewCart}/>
+                 <Stack.Screen name="login" component={Login}/>
+                <Stack.Screen name="contacts" component={Contacts} />
+               
+                
             </Stack.Navigator>}
         </NavigationContainer>
     );
